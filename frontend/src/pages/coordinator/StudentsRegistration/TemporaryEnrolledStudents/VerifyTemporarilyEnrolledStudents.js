@@ -1,42 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 function VerifyTemporarilyEnrolledStudents() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const existingStudentData = location.state?.studentData || [];
-    const [studentData, setStudentData] = useState(existingStudentData);
+    const [studentData, setStudentData] = useState([]);
 
     useEffect(() => {
-        fetchData();
+        // Fetch student data from a file
+        const dummyData = [
+            {
+                rollNo: 20140001,
+                name: "John Doe",
+                email: "john.doe@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: true,
+                seOoad: "Yes",
+                db: "Yes",
+                cgpa3_3_creditHr88: "Yes",
+                cgpa3_0_creditHr89: "Yes"
+            },
+            {
+                rollNo: 20140003,
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: false,
+                seOoad: "No",
+                db: "Yes",
+                cgpa3_3_creditHr88: "No",
+                cgpa3_0_creditHr89: "Yes"
+            },
+            {
+                rollNo: 20140003,
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: false,
+                seOoad: "No",
+                db: "Yes",
+                cgpa3_3_creditHr88: "No",
+                cgpa3_0_creditHr89: "Yes"
+            },
+            {
+                rollNo: 20140003,
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: false,
+                seOoad: "No",
+                db: "Yes",
+                cgpa3_3_creditHr88: "No",
+                cgpa3_0_creditHr89: "Yes"
+            },
+            {
+                rollNo: 20140003,
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: false,
+                seOoad: "No",
+                db: "Yes",
+                cgpa3_3_creditHr88: "No",
+                cgpa3_0_creditHr89: "Yes"
+            },
+            {
+                rollNo: 20140003,
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: false,
+                seOoad: "No",
+                db: "Yes",
+                cgpa3_3_creditHr88: "No",
+                cgpa3_0_creditHr89: "Yes"
+            },
+            {
+                rollNo: 20140003,
+                name: "Jane Smith",
+                email: "jane.smith@example.com",
+                program: "BS Software Engineering Fall 2020",
+                eligible: false,
+                seOoad: "No",
+                db: "Yes",
+                cgpa3_3_creditHr88: "No",
+                cgpa3_0_creditHr89: "Yes"
+            },
+        ];
+        setStudentData(dummyData);
     }, []);
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch('http://localhost:3001/verifyAppliedStudentList');
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const responseData = await response.json();
-            if (Array.isArray(responseData.data)) {
-                setStudentData(responseData.data);
-            } else {
-                console.error('Data is not an array:', responseData.data);
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
-    const handleVerify = async () => {
-        try {
-            const eligibleStudents = studentData.filter(student => student.isEligible);
-            navigate('/coordinator/ActualEnrolledStudents', { state: { eligibleStudents } });
-        } catch (error) {
-            console.error('Error verifying students:', error);
-        }
-    };
+    // const handleSubmit = () => {
+    //     navigate('/')
+    // }Verify Temporarily Enrolled Students
 
     return (
         <div className='conatiner'>
@@ -54,31 +108,42 @@ function VerifyTemporarilyEnrolledStudents() {
                                     <th>#</th>
                                     <th>Roll No</th>
                                     <th>Name</th>
-                                    <th>Enrollment Date</th>
-                                    <th>Status</th>
-                                    <th>Credited</th>
-                                    <th>Entry Date</th>
+                                    <th>Email ID</th>
                                     <th>Program</th>
+                                    <th>Eligible</th>
+                                    <th>SE/OOAD</th>
+                                    <th>DB</th>
+                                    <th>CGPA: 3.3<br />Credit hr: 88</th>
+                                    <th>CGPA: 3.0<br />Credit hr: 89</th>
+                                    <th>
+                                        <label>Select All Eligible</label>
+                                        <input type="checkbox" />
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody style={{ fontSize: '13px' }}>
                                 {studentData.map((student, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{student['Roll No.']}</td>
-                                        <td>{student.Name}</td>
-                                        <td>{student['Enrollment Date']}</td>
-                                        <td>{student.Status}</td>
-                                        <td>{student.Credited}</td>
-                                        <td>{student['Entry Date']}</td>
-                                        <td>{student.Program}</td>
+                                        <td>{student.rollNo}</td>
+                                        <td>{student.name}</td>
+                                        <td>{student.email}</td>
+                                        <td>{student.program}</td>
+                                        <td>{student.eligible ? "Yes" : "No"}</td>
+                                        <td>{student.seOoad}</td>
+                                        <td>{student.db}</td>
+                                        <td>{student.cgpa3_3_creditHr88}</td>
+                                        <td>{student.cgpa3_0_creditHr89}</td>
+                                        <td>
+                                            <input type="checkbox" />
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </Table>
                     </div>
                     <div>
-                        <button type="button" className="btn mt-3" style={{ backgroundColor: '#0496FF', color: 'white' }} onClick={handleVerify} >Submit</button>
+                        <button type="button" className="btn mt-3" style={{ backgroundColor: '#0496FF', color: 'white' }}>Submit</button>
                     </div>
                 </div>
             </div>

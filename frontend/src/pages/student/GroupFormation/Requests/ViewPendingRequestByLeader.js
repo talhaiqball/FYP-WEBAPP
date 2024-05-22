@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ViewPendingRequestByLeader.css';
+import axios from 'axios';
+import { StudentContext } from '../../../../context/StudentContext';
 
 const ViewPendingRequestByLeader = () => {
-    // Dummy data for pending requests (replace with actual data or fetch from API)
-    const [pendingRequests] = useState([
-        { id: 1, sender: 'Group A', status: 'Pending' },
-        { id: 2, sender: 'Group B', status: 'Accepted' },
-        // Add more pending requests as needed
-    ]);
+    const { userid } = useContext(StudentContext);
+    const [pendingRequests, setPendingRequests] = useState([]);
 
-    const handleViewSender = (sender) => {
-        alert(`Viewing group: ${sender}`);
-        // Add logic to view the sender group
-    };
+    useEffect(() => {
+        const fetchPendingRequests = async () => {
+            try {
+                console.log("No pending req found");
+                const response = await axios.get(`http://localhost:3001/viewGroupInvitesByLeader/${userid}`);
+                console.log("No pending req found");
+                if (Array.isArray(response.data.invites)) {
+                    setPendingRequests(response.data.invites);
+                } else {
+                    console.error('Invalid response format:', response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching pending requests:', error);
+            }
+        };
+
+        fetchPendingRequests();
+    }, [userid]);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -23,7 +35,7 @@ const ViewPendingRequestByLeader = () => {
                     {/* Displaying pending requests */}
                     {pendingRequests.map(request => (
                         <div className='requestdiv' key={request.id}>
-                            <p>{request.sender}</p>
+                            <p>{request.memberid}</p>
                             <div className='status'>
                                 <p>{request.status}</p>
                             </div>
@@ -38,6 +50,5 @@ const ViewPendingRequestByLeader = () => {
         </div>
     );
 }
-
 
 export default ViewPendingRequestByLeader;

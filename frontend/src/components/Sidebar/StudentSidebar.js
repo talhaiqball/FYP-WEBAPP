@@ -81,7 +81,7 @@ export default function StudentSidebar() {
                                     </Link>
                                 </li>
                                 <li className="nav-item text-white fs-6 my-1 py-2 py-sm-0">
-                                    <Link to={'/student/ViewGroupByLeader'} className={`nav-link text-white fs-6 ${(!profileCompleted || resetPassword) ? 'disabled' : ''}`} aria-current="page">
+                                    <Link to={'/student/'} className={`nav-link text-white fs-6 ${(!profileCompleted || resetPassword) ? 'disabled' : ''}`} aria-current="page">
                                         <span className='ms-3'>Supervisor Selection</span>
                                     </Link>
                                 </li>

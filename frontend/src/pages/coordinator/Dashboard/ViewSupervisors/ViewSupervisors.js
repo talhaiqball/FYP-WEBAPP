@@ -115,8 +115,6 @@ function ViewSupervisors() {
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Supervision Slots</th>
-                                    <th>Available Slots</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -132,8 +130,6 @@ function ViewSupervisors() {
                                             <td>{supervisor.userid}</td>
                                             <td>{supervisor.name}</td>
                                             <td>{supervisor.email}</td>
-                                            <td>{supervisor.totalSupervisionSlots}</td>
-                                            <td>{supervisor.availableSlots}</td>
                                             <td>
                                                 <span onClick={() => handleViewProfile(supervisor)} style={{ fontSize: 'small', color: '#0496FF', cursor: 'pointer', marginRight: '5px' }}>View Profile</span>
                                                 <span>|</span>

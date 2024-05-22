@@ -2,14 +2,12 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CoordinatorContext } from '../../../context/CoordinatorContext';
-import FailureMessage from '../../../components/Alert/FailureMessage';
 
 const Login = () => {
   const [userid, setUserid] = useState('');
   const [password, setPassword] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
   const navigate = useNavigate();
-  const { updateUserId } = useContext(CoordinatorContext);
+  const { updateUserId } = useContext(CoordinatorContext); // Get updateUserId function from context
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -21,30 +19,20 @@ const Login = () => {
       })
       .catch(err => {
         console.log(err);
-        setAlertMessage("Invalid User ID or Password! Enter again..");
-        setTimeout(() => {
-          setAlertMessage('');
-        }, 6000); // (3000ms = 3 seconds)
+        alert("Invalid User ID or Password! Enter again..");
       });
   };
-
-  // const handleAlertClose = () => {
-  //   setAlertMessage('');
-  // };
-
-
 
   return (
     <div className="container">
       <div className="shadow-lg p-5 col-md-7 mb-5 mt-5 bg-body rounded">
-        <div className="row">
+        <div className="row ">
           <div className="col-sm-6 offset-sm-3 mb-3 text-gred text-center">
             <h2>
               <b>Login</b>
             </h2>
           </div>
         </div>
-        {alertMessage && <FailureMessage alert={alertMessage} />}
         <form onSubmit={handleLogin}>
           <div className="form-group row mt-3">
             <div className="col-sm-3 mt-1">
@@ -59,7 +47,7 @@ const Login = () => {
               <label htmlFor="password">Password</label>
             </div>
             <div className="col-sm-7">
-              <input type="password" className="form-control form-control-sm p-2" id="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+              <input type="password" className="form-control form-control-sm p-2" id="password" value={password} onChange={(event) => setPassword(event.target.value)}/>
             </div>
           </div>
           <div className="text-center mt-3">
@@ -71,9 +59,7 @@ const Login = () => {
             }}
               onMouseOver={(e) => e.target.style.backgroundColor = "#007bff"}
               onMouseOut={(e) => e.target.style.backgroundColor = "#0496FF"}>Login</button>
-            <div className="mt-3">
-              <Link to={`/coordinator/ResetPassword`} className='btn-link' style={{ color: "#0496FF" }}>Forgot password?</Link>
-            </div>
+            <div className="mt-3"> <Link to={`/coordinator/ResetPassword/${userid}`} className='btn-link' style={{ color: "#0496FF" }}>Forgot password?</Link></div>
           </div>
         </form>
       </div>

@@ -71,12 +71,12 @@ export default function SupervisorSidebar() {
                         <div style={{ maxHeight: 'calc(100vh - 120px)', overflowY: 'auto' }}>
                             <ul className="nav nav-pills flex-column mt-3 mt-sm-0">
                                 <li className="nav-item text-white fs-6 my-1 py-2 py-sm-0">
-                                    <Link to={`/supervisor/ViewFYPGroups/${userid}`} className={`nav-link text-white fs-6 ${(!profileCompleted || resetPassword) ? 'disabled' : ''}`} aria-current="page">
+                                    <Link to={`/supervisor/Dashboard/${userid}`} className={`nav-link text-white fs-6 ${(!profileCompleted || resetPassword) ? 'disabled' : ''}`} aria-current="page">
                                         <span className='ms-3'>Dashboard</span>
                                     </Link>
                                 </li>
                                 <li className="nav-item text-white fs-6 my-1 py-2 py-sm-0">
-                                    <Link to={'/supervisor/ViewSupervisionRequests'} className={`nav-link text-white fs-6 ${(!profileCompleted || resetPassword) ? 'disabled' : ''}`} aria-current="page">
+                                    <Link to={'/'} className={`nav-link text-white fs-6 ${(!profileCompleted || resetPassword) ? 'disabled' : ''}`} aria-current="page">
                                         <span className='ms-3'>Group Selection</span>
                                     </Link>
                                 </li>

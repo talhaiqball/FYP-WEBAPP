@@ -25,8 +25,6 @@ import ViewPanelMemberProfile from '../Dashboard/ViewPanelMembers/ViewPanelMembe
 import CoordinatorSidebar from '../../../components/Sidebar/CoordinatorSidebar';
 import ViewFYPGroups from '../Dashboard/ViewFYPGroups/ViewFYPGroups';
 import ViewGroupDetails from '../Dashboard/ViewFYPGroups/ViewGroupDetails';
-import ViewGroupSupervisorProfile from '../Dashboard/ViewFYPGroups/ViewGroupSupervisorProfile';
-import ViewGroupMemberProfile from '../Dashboard/ViewFYPGroups/ViewGroupMemberProfile';
 import GroupFormation from '../GroupFormation/GroupFormation';
 import ViewStudentProfile from '../Dashboard/ViewStudents/ViewStudentProfile';
 
@@ -73,8 +71,6 @@ export default function CoordinatorRoutes() {
           <Route path='/ViewStudentProfile' element={< ViewStudentProfile />} />
           <Route path='/ViewFYPGroups' element={<ViewFYPGroups />} />
           <Route path='/ViewGroupDetails' element={<ViewGroupDetails />} />
-          <Route path="/ViewGroupSupervisorProfile" element={<ViewGroupSupervisorProfile/>} />
-          <Route path='/ViewGroupMemberProfile' element={<ViewGroupMemberProfile/>} />
           <Route path='/GroupFormation' element={<GroupFormation />} />
           <Route path="/ViewSupervisors" element={<ViewSupervisors />} />
           <Route path="/AddSupervisor" element={<AddSupervisor />} />

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
+import { useNavigate } from 'react-router-dom';
 
 const RemainingStudents = () => {
 
-    // const [selectedGroup, setSelectedGroup] = useState(null);
-    // const [showConfirmation, setShowConfirmation] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState(null);
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [unassignedStudents, setUnassignedStudents] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Dummy data for unassigned students
@@ -38,9 +40,9 @@ const RemainingStudents = () => {
     };
 
     return (
-        <div>
+        <div >
             <div className="row ">
-                <div className="col-sm-6 offset-sm-3 mb-4 text-gred text-center">
+                <div className="col-sm-6 offset-sm-3 mb-4 mt-2 text-gred text-center">
                     <h2><b>Remaining Students</b></h2>
                 </div>
             </div>

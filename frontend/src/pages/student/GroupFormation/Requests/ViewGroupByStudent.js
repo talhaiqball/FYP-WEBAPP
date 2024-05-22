@@ -1,25 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { StudentContext } from "../../../../context/StudentContext";
 
-const ViewGroupByLeader = () => {
+const ViewGroupByStudent = () => {
   const navigate = useNavigate();
-  const [isLeader, setIsLeader] = useState(false);
+  const location = useLocation();
   const [group, setGroup] = useState(null);
   const [members, setMembers] = useState([]);
-  const [supervisor, setSupervisor] = useState();
+  const [supervisor, setSupervisor] = useState(null);
   const { userid } = useContext(StudentContext);
 
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  const leaderid = location.state.userid;
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const handleGoBack = () => {
     navigate(-1);
@@ -30,16 +24,11 @@ const ViewGroupByLeader = () => {
   };
 
   useEffect(() => {
-    const isLeaderValue = localStorage.getItem("isLeader");
-    setIsLeader(isLeaderValue === "true");
-
     // Fetch group data from API
-
     const fetchGroupData = async () => {
       try {
-        console.log("kaodkawkdokaw");
         const response = await axios.get(
-          `http://localhost:3001/viewGroupByLeader/${userid}`
+          `http://localhost:3001/viewGroupByLeader/${leaderid}`
         );
 
         console.log("API response:", response.data);
@@ -51,8 +40,24 @@ const ViewGroupByLeader = () => {
       }
     };
 
-    fetchGroupData();
-  }, [userid]);
+    if (leaderid) {
+      fetchGroupData();
+    }
+  }, [leaderid]);
+
+  const handleAccept = async () => {
+    if (group) {
+      try {
+        await axios.post("http://localhost:3001/acceptGroupInviteByMember", {
+          memberid: userid,
+          groupid: group.groupid,
+        });
+        console.log("Group invite accepted");
+      } catch (error) {
+        console.error("Error accepting group invite:", error);
+      }
+    }
+  };
 
   return (
     <div className="container">
@@ -124,22 +129,22 @@ const ViewGroupByLeader = () => {
               </div>
             </div>
             <div className="form-group row pt-3">
-              <div className="col-sm-2">
-                <label htmlFor="groupDomain" className="col-form-label">
-                  Program
-                </label>
-              </div>
-              <div className="col-sm-8">
-                <input
-                  type="text"
-                  className="form-control form-control-sm p-2"
-                  id="groupDomain"
-                  name="domain"
-                  value={group?.program || ""}
-                  disabled
-                />
-              </div>
+            <div className="col-sm-2">
+              <label htmlFor="groupDomain" className="col-form-label">
+                Program
+              </label>
             </div>
+            <div className="col-sm-8">
+              <input
+                type="text"
+                className="form-control form-control-sm p-2"
+                id="groupDomain"
+                name="domain"
+                value={group?.program || ""}
+                disabled
+              />
+            </div>
+          </div>
             <div className="form-group row pt-3">
               <div className="col-md-2 pt-2">
                 <label htmlFor="supervisor" className="col-form-label">
@@ -232,27 +237,16 @@ const ViewGroupByLeader = () => {
                 </Table>
               </div>
             </div>
-            <div className="row">
-              <div className="col">
-                {isLeader && (
-                  <Link
-                    to={`/student/EditGroupByLeader`}
-                    className="btn btn-primary float-start"
-                  >
-                    Edit
-                  </Link>
-                )}
-              </div>
-              <div className="col text-end">
-                {isLeader && (
-                  <Link
-                    to={`/student/SearchStudentByLeader`}
-                    className="btn btn-primary"
-                  >
-                    Invite Member
-                  </Link>
-                )}
-              </div>
+            <div className="d-flex justify-content-end">
+              <button className="btn btn-primary" onClick={handleAccept}>
+                Accept
+              </button>
+              <button
+                className="btn btn-danger"
+                style={{ marginLeft: "10px", flexDirection: "row-flex-end" }}
+              >
+                Reject
+              </button>
             </div>
           </form>
         </div>
@@ -261,4 +255,4 @@ const ViewGroupByLeader = () => {
   );
 };
 
-export default ViewGroupByLeader;
+export default ViewGroupByStudent;

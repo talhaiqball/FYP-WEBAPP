@@ -1,37 +1,11 @@
-import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import axios from 'axios';
 
 function ViewSupervisorProfile() {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const navigate = useNavigate();
     const location = useLocation();
     const supervisor = location.state.supervisor;
-    const [slots, setSlots] = useState(supervisor.totalSupervisionSlots);
-
-    const handleDecrease = async () => {
-        const newSlots = Math.max(slots - 1, 0);
-        setSlots(newSlots);
-        await updateSlots(supervisor.userid, newSlots);
-    };
-
-    const handleIncrease = async () => {
-        const newSlots = slots + 1;
-        setSlots(newSlots);
-        await updateSlots(supervisor.userid, newSlots);
-    };
-
-    const updateSlots = async (userid, slots) => {
-        try {
-            await axios.post('http://localhost:3001/addSupervisionSlots', { 
-                userid, 
-                slots
-            });
-        } catch (error) {
-            console.error('Error updating supervision slots:', error);
-        }
-    };
 
     const handleGoBack = () => {
         navigate(-1);
@@ -77,42 +51,6 @@ function ViewSupervisorProfile() {
                                 </div>
                                 <div className="col-sm-8">
                                     <input type='text' className="form-control form-control-sm p-2" id="domain" value={supervisor.domain} disabled />
-                                </div>
-                            </div>
-                            <div className="form-group row pt-3">
-                                <div className="col-sm-2">
-                                    <label htmlFor="supervisionSlots" className="col-form-label">Total Supervision Slots</label>
-                                </div>
-                                <div className="col-sm-8 d-flex align-items-center">
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary btn-sm"
-                                        onClick={handleDecrease}
-                                    >
-                                        -
-                                    </button>
-                                    <input
-                                        type="text"
-                                        className="form-control form-control-sm text-center mx-2"
-                                        id="supervisionSlots"
-                                        value={slots}
-                                        readOnly
-                                    />
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary btn-sm"
-                                        onClick={handleIncrease}
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="form-group row pt-3">
-                                <div className="col-sm-2">
-                                    <label htmlFor="availableSlots" className="col-form-label">Available Slots</label>
-                                </div>
-                                <div className="col-sm-8">
-                                    <input type='text' className="form-control form-control-sm p-2" id="availableSlots" value={supervisor.availableSlots} disabled />
                                 </div>
                             </div>
                             <div className="form-group pt-3">

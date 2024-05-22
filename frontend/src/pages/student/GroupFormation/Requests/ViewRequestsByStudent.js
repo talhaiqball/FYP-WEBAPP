@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ViewRequestsByStudent.css';
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import { StudentContext } from '../../../../context/StudentContext';
+import axios from 'axios';
+
 
 const ViewRequestsByStudent = () => {
-    // Dummy data for requests (replace with actual data or fetch from API)
-    const [requests] = useState([
-        { id: 1, title: 'Talha Iqbal', description: ' send you group request', sender: 'Group A' },
-        { id: 1, title: 'Talha Iqbal', description: ' send you group request', sender: 'Group A' },
-        // Add more requests as needed
-    ]);
-
-    const handleViewSender = (sender) => {
-        alert(`Viewing group: ${sender}`);
-        // Add logic to view the sender group
+const [requests, setRequests] = useState([]);
+const {userid} = useContext(StudentContext);
+const navigate = useNavigate()
+console.log(userid)
+useEffect(() => {
+    const fetchRequests = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/viewGroupInvitesByMember/${userid}`);
+            
+            if (Array.isArray(response.data.invites)) {
+                setRequests(response.data.invites);
+            } else {
+                console.error('Invalid response format:', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching pending requests:', error);
+        }
     };
+
+    fetchRequests();
+    
+}, [userid]);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -23,11 +37,14 @@ const ViewRequestsByStudent = () => {
                     <hr width="100%"></hr>
                     {/* Displaying requests */}
                     {requests.map(request => (
-                        <div className='requestdiv' key={request.id}>
+                        <div className='requestdiv' key={request._id}>
                             
-                            <p>{request.title}{request.description}</p>
+                            <p>Invited By {request.leaderid}</p>
 
-                            <button className='button-85' onClick={() => handleViewSender(request.sender)}>View Group</button>
+                            <button className='button-85' onClick={async()=>{
+
+                                navigate('/student/ViewGroupByStudent', { state: { userid: request.leaderid } });
+                            }} >View Group</button>
                         </div>
                     ))}
                 </fieldset>

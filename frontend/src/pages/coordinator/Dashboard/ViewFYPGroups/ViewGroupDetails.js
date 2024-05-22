@@ -1,59 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import axios from 'axios';
 
 const ViewGroupDetails = () => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const navigate = useNavigate();
     const location = useLocation();
-    const { groupid } = location.state;
-    const [group, setGroup] = useState(null);
-    const [coomonFreeSlots, setCommoncoomonFreeSlots] = useState([]);
-    const [supervisor, setSupervisor] = useState(null);
-    const [members, setMembers] = useState([]);
+    const group = location.state.group;
 
-    useEffect(() => {
-        axios.get(`http://localhost:3001/viewSingleGroupDetails/${groupid}`)
-            .then(response => {
-                const groupData = response.data;
-                setGroup(groupData.group);
-                setCommoncoomonFreeSlots(groupData.group.commoncoomonFreeSlots);
-                setSupervisor(groupData.supervisor);
-                setMembers(groupData.members);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, [groupid]);
-
-    console.log(group)
-
+    const freeslots = '';
+    
     const handleGoBack = () => {
         navigate(-1);
     };
 
     const handleSupervisorProfile = (supervisor) => {
-        navigate(`/coordinator/ViewGroupSupervisorProfile`, { state: { supervisor } });
-    };
-
-    const handleGroupMemberProfile = (member) => {
-        navigate(`/coordinator/ViewGroupMemberProfile`, { state: { student: member } });
+        navigate(`/coordinator/ViewSupervisorProfile`, { state: { supervisor } });
     };
 
     return (
         <div className='container'>
-            <div className='shadow-lg p-3 col-md-12 mb-5 mt-5 bg-body rounded'>
-                <div className="row">
+            <div
+                className='shadow-lg p-3 col-md-12 mb-5 mt-5 bg-body rounded'>
+                <div className="row ">
                     <div className="col-sm-6 offset-sm-3 mb-4 mt-2 text-gred text-center">
                         <h2><b>Group Details</b></h2>
                     </div>
                     <div className="col-sm-3 mb-4 mt-3 text-end">
-                        <button className="btn-close" onClick={handleGoBack} style={{ marginRight: '1rem' }} />
+                        <button
+                            className="btn-close"
+                            onClick={handleGoBack}
+                            style={{ marginRight: '1rem' }}
+                        />
                     </div>
                 </div>
                 <div className='row'>
-                {group && supervisor && members.length > 0 && (
+                    {group && (
                         <form style={{ paddingLeft: '50px' }}>
                             <div className="form-group row pt-3">
                                 <div className="col-sm-2">
@@ -87,36 +69,35 @@ const ViewGroupDetails = () => {
                                     <span className="btn-link" onClick={() => handleSupervisorProfile(group.supervisor)}
                                         style={{ color: '#0496FF', cursor: 'pointer', textDecoration: 'none' }}
                                         title="View Profile">
-                                        {supervisor.userid}&nbsp;
-                                        {supervisor.name}
+                                        {group.supervisor} &nbsp;
+                                        {group.supervisor}
                                     </span>
                                 </div>
                             </div>
 
                             <div className="form-group row pt-3">
-                                <div>
+                                <div className="col-sm-4">
                                     <label htmlFor="members" className="col-form-label">Group Members</label>
                                 </div>
-                                <div className="col-sm-6 offset-md-2">
-                                    {members.map((member, index) => (
-                                        <div key={index}>
-                                            <span className="btn-link" onClick={() => handleGroupMemberProfile(member)}
-                                                style={{ color: '#0496FF', cursor: 'pointer', textDecoration: 'none' }}
+                                <div className='offset-sm-2'>
+                                    {group.members.map((member, index) => (
+                                        <div key={index} style={{ marginBottom: '10px' }}>
+                                            <span className="btn-link" onClick={() => handleSupervisorProfile(group.supervisor)}
+                                                style={{ color: '#0496FF', cursor: 'pointer', marginRight: '5px', textDecoration: 'none' }}
                                                 title="View Profile">
-                                                {member.userid} &nbsp;
-                                                ({member.program}) &nbsp;
-                                                {member.name}
+                                                {member}&nbsp;
+                                                ({member}) &nbsp;
+                                                {member}
                                             </span>
                                         </div>
                                     ))}
-
                                 </div>
                             </div>
                             <div className='form-group row pt-3'>
-                                <div className="col-sm-4">
-                                    <label htmlFor='coomonFreeSlots'>Common Free Slots</label>
+                                <div className="col-sm-2">
+                                    <label htmlFor='freeslots'>Free Slots</label>
                                 </div>
-                                {/* <div className="table-responsive pt-3">
+                                <div className="table-responsive pt-3">
                                     <Table className='table table-striped table-hover text-center table-sm' style={{ width: '100%' }}>
                                         <thead>
                                             <tr>
@@ -131,7 +112,7 @@ const ViewGroupDetails = () => {
                                                 <tr key={rowIndex}>
                                                     <td>{row}</td>
                                                     {days.map((_, columnIndex) => {
-                                                        const slot = coomonFreeSlots[rowIndex] ? coomonFreeSlots[rowIndex][columnIndex] : 0;
+                                                        const slot = freeslots[rowIndex] ? freeslots[rowIndex][columnIndex] : 0;
                                                         return (
                                                             <td key={columnIndex}>
                                                                 <button
@@ -147,10 +128,11 @@ const ViewGroupDetails = () => {
                                             ))}
                                         </tbody>
                                     </Table>
-                                </div> */}
+                                </div>
                             </div>
                         </form>
                     )}
+
                 </div>
             </div>
         </div>

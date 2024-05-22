@@ -16,7 +16,7 @@ const ViewFYPGroups = () => {
     useEffect(() => {
         const fetchGroupsData = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/viewAllGroups');
+                const response = await axios.get('http://localhost:3001/viewAllFYPGroups');
                 setGroups(response.data);
             } catch (error) {
                 console.error('Error fetching group data:', error);
@@ -41,7 +41,7 @@ const ViewFYPGroups = () => {
     };
 
     const handleViewDetails = (group) => {
-        navigate('/coordinator/ViewGroupDetails', { state: { groupid: group.groupid } });
+        navigate('/coordinator/ViewGroupDetails', {state: { group }});
     };
 
     const handleDeleteGroup = (group) => {
@@ -190,7 +190,6 @@ const ViewFYPGroups = () => {
                                     )}
                                     <th>Group ID</th>
                                     <th>Project Title</th>
-                                    <th>Supervisor</th>
                                     <th>Action</th>
                                 </tr>
 
@@ -215,7 +214,6 @@ const ViewFYPGroups = () => {
                                         )}
                                         <td>{group.groupid}</td>
                                         <td>{group.title}</td>
-                                        <td>{group.supervisorName}</td>
                                         <td>
                                             <span onClick={() => handleViewDetails(group)} style={{ color: '#0496FF', cursor: 'pointer', marginRight: '5px' }}>View Group</span>
                                             <span>|</span>

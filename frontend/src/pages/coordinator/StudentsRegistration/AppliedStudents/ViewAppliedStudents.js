@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
 import AddStudentsFile from '../../../../components/AddStudentsFile/AddStudentsFile';
-import axios from 'axios';
 
 function ViewAppliedStudents() {
     const navigate = useNavigate();
@@ -19,7 +18,7 @@ function ViewAppliedStudents() {
                 throw new Error('Failed to fetch data');
             }
             const responseData = await response.json();
-            console.log("Fetched data:", responseData.data);
+            console.log("Fetched data:", responseData.data); // Log fetched data
             if (Array.isArray(responseData.data)) {
                 setStudentData(responseData.data);
             } else {
@@ -32,46 +31,16 @@ function ViewAppliedStudents() {
 
     const handleVerify = async () => {
         try {
-            const response = await fetch('http://localhost:3001/verifyAppliedStudentList');
-            if (!response.ok) {
-                throw new Error('Failed to verify students');
-            }
-            console.log("ResponseData = ", response)
-            const responseData = await response.json();
-    
-            const eligibleStudents = responseData.data
-                .filter(student => student.isEligible)
-                .map(student => ({
-                    userid: student['Roll No.'],
-                    name: student.Name,
-                    email: student.Email,
-                    program: student.Program,
-                    Status: 'Active',
-                    Credited: 'Y'
-                }));
-    
-            console.log('Eligible students:', eligibleStudents);
-    
-            const registerResponse = await axios.post('http://localhost:3001/registerEligibleStudents',
-                { data: eligibleStudents });
-    
-            console.log('Register response:', eligibleStudents);
-    
-            if (registerResponse.status !== 201) {
-                throw new Error('Failed to register students');
-            }
-    
-            console.log('Navigation to next page...');
-            navigate('/coordinator/ActualEnrolledStudents', { state: { eligibleStudents } });
+            navigate('/coordinator/VerifyAppliedStudents', { state: { studentData } });
         } catch (error) {
-            console.error('Error verifying and registering:', error);
+            console.error('Error navigating:', error);
         }
     };
 
     return (
-        <div className='container'>
+        <div className='conatiner'>
             <div className="shadow-lg p-3 mb-5 mt-5 bg-body rounded">
-                <div className="row">
+                <div className="row ">
                     <div className="mb-4 mt-2 text-gred text-center">
                         <h2><b>Applied Students</b></h2>
                     </div>
@@ -85,7 +54,6 @@ function ViewAppliedStudents() {
                                     <th>#</th>
                                     <th>Roll No</th>
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th>Enrollment Date</th>
                                     <th>Status</th>
                                     <th>Credited</th>
@@ -99,7 +67,6 @@ function ViewAppliedStudents() {
                                         <td>{index + 1}</td>
                                         <td>{student['Roll No.']}</td>
                                         <td>{student.Name}</td>
-                                        <td>{student.Email}</td>
                                         <td>{student['Enrollment Date']}</td>
                                         <td>{student.Status}</td>
                                         <td>{student.Credited}</td>

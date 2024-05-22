@@ -17,9 +17,10 @@ const AddPanelMember = ({ show, onHide, onConfirm }) => {
             setEmail('');
             if (onConfirm) {
                 onConfirm();
+                console.log("Successfully Added")
             }
         } catch (error) {
-            console.error('Error adding PanelMember:', error);
+            console.error('Error adding Panel Member:', error);
         }
     };
 
@@ -30,35 +31,23 @@ const AddPanelMember = ({ show, onHide, onConfirm }) => {
             </Modal.Header>
             <Modal.Body>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group row">
-                        <div className='col-sm-2'>
-                            <label htmlFor="userid">User ID</label>
-                        </div>
-                        <div className='col-sm-8'>
-                            <input type="text" className="form-control form-control-sm p-2" id="userid" value={userid} onChange={(e) => setUserid(e.target.value)} />
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="userid">User ID</label>
+                        <input type="text" className="form-control" id="userid" value={userid} onChange={(e) => setUserid(e.target.value)} />
                     </div>
-                    <div className="form-group row pt-3">
-                        <div className='col-sm-2'>
-                            <label htmlFor="name">Name</label>
-                        </div>
-                        <div className='col-sm-8'>
-                            <input type="text" className="form-control form-control-sm p-2" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-                        </div>
+                    <div className="form-group pt-3">
+                        <label htmlFor="name">Name</label>
+                        <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
-                    <div className="form-group row pt-3">
-                        <div className='col-sm-2'>
-                            <label htmlFor="email">Email</label>
-                        </div>
-                        <div className='col-sm-8'>
-                            <input type="email" className="form-control form-control-sm p-2" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </div>
+                    <div className="form-group pt-3">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
-                    <div className="d-flex justify-content-end">
-                        <Button className='mt-3' variant="secondary" onClick={onHide}>
+                    <div className="d-inline mt-3">
+                        <Button className="mt-3" variant="secondary" onClick={onHide}>
                             Cancel
                         </Button>
-                        <Button className='mt-3' type="submit" variant="primary" style={{ backgroundColor: '#0496FF', borderColor: '#0496FF', marginLeft: '10px' }}>
+                        <Button className="mt-3" type="submit" variant="primary" style={{ backgroundColor: '#0496FF', borderColor: '#0496FF', marginLeft: '10px' }}>
                             Add
                         </Button>
                     </div>

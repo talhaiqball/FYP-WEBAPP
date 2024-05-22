@@ -43,9 +43,9 @@ const IncompleteGroups = () => {
     };
 
     return (
-        <div >
+        <div>
             <div className="row ">
-                <div className="col-sm-6 offset-sm-3 mb-4 text-gred text-center">
+                <div className="col-sm-6 offset-sm-3 mb-4 mt-2 text-gred text-center">
                     <h2><b>Incomplete Groups</b></h2>
                 </div>
             </div>

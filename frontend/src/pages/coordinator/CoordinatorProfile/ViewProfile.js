@@ -20,10 +20,10 @@ function ViewProfile() {
         };
 
         fetchCoordinatorInfo();
-    }, [userid]);
+    }, []);
 
     const handleEdit = () => {
-        navigate(`/coordinator/EditProfile/${userid}`,{ state: { coordinator } });
+        navigate(`/coordinator/EditProfile/${userid}`);
     };
 
     const handleGoBack = () => {

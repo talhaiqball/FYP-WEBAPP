@@ -91,7 +91,6 @@ function ViewStudents() {
                                     <th>#</th>
                                     <th>Roll No</th>
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th>Program</th>
                                     <th>Actions</th>
                                 </tr>
@@ -107,7 +106,6 @@ function ViewStudents() {
                                                 <td>{index + 1}</td>
                                                 <td>{student.userid}</td>
                                                 <td>{student.name}</td>
-                                                <td>{student.email}</td>
                                                 <td>{student.program}</td>
                                                 <td>
                                                     <span onClick={() => handleViewProfile(student)} style={{ fontSize: 'small', color: '#0496FF', cursor: 'pointer', marginRight: '5px' }}>View Profile</span>

@@ -4,31 +4,32 @@ import axios from "axios";
 import { CoordinatorContext } from "../../../context/CoordinatorContext";
 
 const ResetPassword = () => {
-  const { updateResetPassword } = useContext(CoordinatorContext);
-  const [email, setEmail] = useState("");
-  const [currentEmail, setCurrentEmail] = useState("");
+  const {updateResetPassword} = useContext(CoordinatorContext);
+  const [userid, setUserid] = useState("");
+  const [currentUserid, setCurrentUserid] = useState("");
   const [emailSent, setEmailSent] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.patch(
-        "http://localhost:3001/resetPasswordCoordinator", { email }
-      );
+        "http://localhost:3001/resetPasswordCoordinator");
       console.log(response.data);
-      setCurrentEmail(email);
+      setCurrentUserid(userid);
       setEmailSent(true);
-      setEmail("");
+      setUserid("");
       updateResetPassword(true);
     } catch (error) {
       console.log(error);
-      alert("Invalid email! Enter Again...");
+      alert("Invalid User ID! Enter Again...");
     }
   };
 
   return (
     <div className="container">
-      <div className="shadow-lg p-5 col-sm-auto col-sm-7 mb-5 mt-5 bg-body rounded">
+      <div
+        className="shadow-lg p-5 col-sm-auto col-sm-7 mb-5 mt-5 bg-body rounded"
+      >
         <div className="row">
           <div className="mb-3 mt-2 text-center">
             <h2>
@@ -39,31 +40,36 @@ const ResetPassword = () => {
             {emailSent ? (
               <span style={{ color: "#b0b0b0" }}>
                 Email is Sent with login Information to{" "}
-                <b>{currentEmail}</b>
+                <b>{currentUserid}@gift.edu.pk</b>
                 <br />
-                Please check your email for further instructions.
+                Type your Roll No/User ID to Retrieve Password on GIFT Email
+                Account
               </span>
             ) : (
               <span style={{ color: "#b0b0b0" }}>
-                Enter your GIFT Email Account to Retrieve Password
+                Type your Roll No/User ID to Retrieve Password on GIFT Email
+                Account
               </span>
             )}
           </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group row">
               <div className="col-sm-auto pt-2">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="userid">User ID</label>
               </div>
               <div className="col-sm-auto col-sm-9">
                 <div className="input-group">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control form-control-sm p-2"
-                    id="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    id="userid"
+                    value={userid}
+                    onChange={(event) => setUserid(event.target.value)}
                     aria-describedby="basic-addon2"
                   />
+                  <span className="pt-1 p-1" id="basic-addon2">
+                    @gift.edu.pk
+                  </span>
                 </div>
               </div>
             </div>
@@ -86,8 +92,7 @@ const ResetPassword = () => {
               <div className="mt-3 mb-3">
                 <Link
                   to={`/coordinator/Login`}
-                  className="btn-link"
-                  style={{ color: "#0496FF" }}
+                  className="btn-link" style={{ color: "#0496FF" }}
                 >
                   Click Here to Login?
                 </Link>
