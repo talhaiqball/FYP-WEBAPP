@@ -1,0 +1,86 @@
+.container-fluid.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 251px;
+    background-color: #0496FF;
+    color: white;
+    z-index: 100;
+    transition: transform 0.3s ease-in-out;
+}
+
+.bg-custom {
+    background-color: #0496FF;
+}
+
+.nav.nav-pills li.nav-item a.nav-link:hover {
+    background-color: white !important; 
+    color: #0496FF !important; 
+}
+
+.nav-pills li a:hover,
+.dropdown-menu .dropdown-item:hover {
+    background-color: #0496FF !important; 
+    color: white !important; 
+}
+
+body {
+    transition: padding-left 0.3s ease-in-out;
+}
+
+.container-fluid.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    background-color: #0496FF;
+    color: white;
+    z-index: 100;
+    transition: left 0.1s ease-in-out;
+}
+
+.sidebar-toggle {
+    position: fixed;
+    top: 50%;
+    left: 0; /* Adjust as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 101;
+}
+
+.sidebar-toggle i {
+    font-size: 26px;
+    color: black;
+}
+
+.hover-text {
+    position: absolute;
+    top: 50%;
+    left: calc(80% + 2px);
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar-toggle:hover .hover-text {
+    opacity: 1;
+}
+
+.small {
+    font-size: 12px;
+}
+
+@media (max-width: 767px) {
+    .container-fluid.sidebar {
+        width: 100%;
+        left: -100%;
+    }
+    .main-content {
+        width: 100%;
+    }
+}

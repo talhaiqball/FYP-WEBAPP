@@ -1,0 +1,15 @@
+#editgroup{
+    margin-left: 500px;
+    padding: 10px;
+    width: 170px;
+    height: 45px;
+}
+#inviteMember{
+    width: 170px;
+    height: 45px;
+}
+
+.btndiv{
+    margin-top: 50px;
+    display: flex;
+}

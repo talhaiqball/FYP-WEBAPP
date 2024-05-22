@@ -1,0 +1,25 @@
+/* styles/ViewPendingRequests.css */
+
+.view-pending-requests-container {
+    display: flex;
+    height: 100vh; /* Adjust height as needed */
+}
+
+.pending-requests-list {
+    width: 50%; /* Adjust width as needed */
+}
+
+.requestdiv {
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.status {
+    margin-left: 350px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border:  1px solid grey;
+}
